@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Shop</title>
+  <style>
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 40px;
+    color: #333;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    color: #2c2c2c;
+  }
+
+  p {
+    background: white;
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+  }
+
+  hr {
+    margin: 30px 0;
+    border: none;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  th {
+    background: #4f46e5;
+    color: white;
+    padding: 14px;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  td {
+    padding: 14px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+  }
+
+  tr:hover {
+    background: #f3f4ff;
+  }
+
+  button {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background: #16a34a;
+    transform: scale(1.05);
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* ===== RESPONSIVE DESIGN ===== */
+  @media (max-width: 700px) {
+    body {
+      padding: 20px;
+    }
+
+    table {
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 10px;
+    }
+  }
+
+    .nav-btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 26px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #4f46e5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+    .btn-add-money {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #ff6b6b, #6bc1ff); /* warm coral → cool cyan */
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-add-money:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.btn-add-money:active {
+    transform: translateY(0px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+  </style>
+</head>
+<body>
+
+<h2>User Info</h2>
+<p>Your money: <span th:text="${user.money + ' $'}"></span></p>
+
+<form th:action="@{/add-money}" method="post" style="display:inline;">
+  <input type="hidden" name="amount" value="100"/>
+  <button class = "btn-add-money" type="submit">
+    Add $100
+  </button>
+</form>
+
+<hr>
+
+<h2>Products</h2>
+
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Quality</th>
+    <th>Price</th>
+    <th>Action</th>
+  </tr>
+
+  <tr th:each="product : ${products}">
+    <td th:text="${product.name}"></td>
+    <td th:text="${product.quality}"></td>
+    <td th:text="${product.price + ' $'}"></td>
+
+    <td>
+      <form th:action="@{/buy}" method="post">
+        <input type="hidden" th:name="productId" th:value="${product.id}">
+        <button type="submit">Buy</button>
+      </form>
+    </td>
+  </tr>
+
+</table>
+<a class="nav-btn" th:href="@{/home}">Back to home</a>
+</body>
+</html>

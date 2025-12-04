@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Order</title>
+    <style>
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 28px;
+    color: #333;
+    font-weight: 600;
+}
+
+form {
+    width: 380px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-size: 15px;
+    color: #444;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
+}
+
+button {
+    padding: 12px;
+    background-color: #4a90e2;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+button:hover {
+    background-color: #357ABD;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(53, 122, 189, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 500px) {
+    form {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<h2>Create a New product</h2>
+
+<form th:action="@{/product/create}" th:object="${product}" method="post">
+
+    <label>Product Name:</label>
+    <input type="text" th:field="*{name}" required><br><br>
+
+    <label>Quality:</label>
+    <input type="text" th:field="*{quality}" required><br><br>
+
+    <label>Price:</label>
+    <input type="number" th:field="*{price}" min="0" required><br><br>
+
+    <button type="submit">Create Product</button>
+</form>
+
+</body>
+</html>
